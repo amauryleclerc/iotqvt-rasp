@@ -26,13 +26,15 @@ public class Launcher {
 		t.start();
 
 	}
-	private static Properties loadProperties() throws IOException{
+	private static  Properties loadProperties() throws IOException{
 
 		Properties applicationProps = new Properties();
-		FileInputStream	in = new FileInputStream("config");
-		applicationProps.load(in);
-		in.close();
-		return null;
+//		InputStream input = applicationProps.getClass().getResourceAsStream("config.properties");
+		FileInputStream input =  new FileInputStream("config.properties");
+	
+		applicationProps.load(input);
+		input.close();
+		return applicationProps;
 		
 	}
 }
