@@ -1,5 +1,7 @@
 package fr.iotqvt.rasp.modele;
 
+import com.google.gson.Gson;
+
 
 public class MesureMessage extends Mesure {
 	private String id;
@@ -15,5 +17,9 @@ public class MesureMessage extends Mesure {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 }

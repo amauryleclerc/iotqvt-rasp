@@ -22,6 +22,7 @@ public class WebsocketClient {
     public WebsocketClient(URI endpointURI) {
  
         try {
+        	
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             container.connectToServer(this, endpointURI);
         } catch (Exception e) {
