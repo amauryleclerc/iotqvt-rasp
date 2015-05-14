@@ -11,7 +11,6 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-import fr.iotqvt.rasp.modele.Mesure;
 import fr.iotqvt.rasp.modele.MesureMessage;
 
 @ClientEndpoint

@@ -27,11 +27,11 @@ public class App implements Runnable {
 		try{
 
 			while(true){
-//				Mesure m =	CapteurTemperature.getInstance().getMesure();
+				Mesure m =	CapteurTemperature.getInstance().getMesure();
 				
-				Mesure m = new Mesure();
-				m.setTemp(20555);
-				m.setDate(new Date().getTime());
+//				Mesure m = new Mesure();
+//				m.setTemp(20555);
+//				m.setDate(new Date().getTime());
 				MesureMessage mm = new MesureMessage(m, id);
 				System.out.println(mm);
 				wsc.sendMesureMessage(new MesureMessage(m, id));
