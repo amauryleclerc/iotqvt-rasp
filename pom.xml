@@ -54,5 +54,30 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<plugin>
+			<artifactId>maven-assembly-plugin</artifactId>
+			<version>${assembly-plugin.version}</version>
+			<executions>
+				<execution>
+					<id>jar-with-dependencies</id>
+					<phase>package</phase>
+					<goals>
+						<goal>single</goal>
+					</goals>
+					<configuration>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+						<archive>
+							<manifest>
+								<mainClass>
+									fr.iotqvt.rasp.Launcher
+								</mainClass>
+							</manifest>
+						</archive>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
 	</build>
 </project>
