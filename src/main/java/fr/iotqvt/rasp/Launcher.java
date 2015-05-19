@@ -1,7 +1,7 @@
 package fr.iotqvt.rasp;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
@@ -29,9 +29,8 @@ public class Launcher {
 	private static  Properties loadProperties() throws IOException{
 
 		Properties applicationProps = new Properties();
-//		InputStream input = applicationProps.getClass().getResourceAsStream("config.properties");
-		FileInputStream input =  new FileInputStream("src/main/resources/config.properties");
-	
+
+		InputStream input =   Launcher.class.getClassLoader().getResourceAsStream("config.properties");
 		applicationProps.load(input);
 		input.close();
 		return applicationProps;
