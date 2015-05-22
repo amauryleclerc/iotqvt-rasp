@@ -18,7 +18,7 @@ public class Launcher {
 			 frequence = Integer.valueOf(properties.getProperty("frequence"));
 			 uri = new URI(properties.getProperty("uriMaster"));
 			 id = properties.getProperty("identifiant");
-			 } catch (IOException | URISyntaxException ex) {
+			 } catch (Exception ex) {
 			System.err.println("IOException exception: " + ex.getMessage());
 		}
 		App app = new App(frequence, uri ,id);
