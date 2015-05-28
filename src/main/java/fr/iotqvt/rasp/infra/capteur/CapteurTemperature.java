@@ -11,26 +11,22 @@ import java.util.Date;
 
 import fr.iotqvt.rasp.modele.Mesure;
 
-public class CapteurTemperature extends Capteur{
+public class CapteurTemperature implements Capteur{
 
 	private Path filePath;
-//	private static CapteurTemperature instance;
+	private static CapteurTemperature instance;
 
-	public CapteurTemperature() {
+	private CapteurTemperature() {
 		super();
 		this.runW1();
 		this.filePath = getDeviceFile();
 	}
-
-//	public static CapteurTemperature getInstance() {
-//		if (instance == null) {
-//			
-//			instance = new CapteurTemperature();
-//			instance.runW1();
-//			instance.filePath = instance.getDeviceFile();
-//		}
-//		return instance;
-//	}
+	public static CapteurTemperature getInstance() {
+		if (instance == null) {
+			instance = new CapteurTemperature();
+		}
+		return instance;
+	}
 
 	private void runW1() {
 		Runtime runtime = Runtime.getRuntime();
