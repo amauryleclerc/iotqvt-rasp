@@ -2,23 +2,24 @@ package fr.iotqvt.rasp.modele;
 
 public class Mesure {
 	
-	private int temp;
+	private Float valeur;
 	private long date;
 
 	
-	public Mesure(int temp, long date) {
+	public Mesure(Float temp, long date) {
 		super();
-		this.temp = temp;
+		this.valeur = temp;
 		this.date = date;
 	}
 	public Mesure() {
 		
 	}
-	public int getTemp() {
-		return temp;
+	
+	public Float getValeur() {
+		return valeur;
 	}
-	public void setTemp(int temp) {
-		this.temp = temp;
+	public void setValeur(Float valeur) {
+		this.valeur = valeur;
 	}
 	public long getDate() {
 		return date;

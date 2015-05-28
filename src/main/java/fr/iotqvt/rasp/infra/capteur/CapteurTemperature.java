@@ -1,4 +1,4 @@
-package fr.iotqvt.rasp.infra;
+package fr.iotqvt.rasp.infra.capteur;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,25 +11,26 @@ import java.util.Date;
 
 import fr.iotqvt.rasp.modele.Mesure;
 
-public class CapteurTemperature {
+public class CapteurTemperature extends Capteur{
 
 	private Path filePath;
-	private static CapteurTemperature instance;
+//	private static CapteurTemperature instance;
 
 	public CapteurTemperature() {
 		super();
-	
+		this.runW1();
+		this.filePath = getDeviceFile();
 	}
 
-	public static CapteurTemperature getInstance() {
-		if (instance == null) {
-			
-			instance = new CapteurTemperature();
-			instance.runW1();
-			instance.filePath = instance.getDeviceFile();
-		}
-		return instance;
-	}
+//	public static CapteurTemperature getInstance() {
+//		if (instance == null) {
+//			
+//			instance = new CapteurTemperature();
+//			instance.runW1();
+//			instance.filePath = instance.getDeviceFile();
+//		}
+//		return instance;
+//	}
 
 	private void runW1() {
 		Runtime runtime = Runtime.getRuntime();
@@ -103,11 +104,15 @@ public class CapteurTemperature {
 	
 	}
 
-	public  Mesure getMesure() {
+	@Override
+	public Mesure getMesure() {
 		Mesure resultat = new Mesure();
-		resultat.setTemp(getTemperature());
+		resultat.setValeur((float)getTemperature()/1000);
 		resultat.setDate(new Date().getTime());
 		return resultat;
 	}
+
+	
+
 
 }

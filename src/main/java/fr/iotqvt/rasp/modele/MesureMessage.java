@@ -8,7 +8,7 @@ public class MesureMessage extends Mesure {
 	
 	
 	public MesureMessage(Mesure m , String id) {
-		super(m.getTemp(), m.getDate());
+		super(m.getValeur(), m.getDate());
 		this.id = id;
 	}
 	public String getId() {

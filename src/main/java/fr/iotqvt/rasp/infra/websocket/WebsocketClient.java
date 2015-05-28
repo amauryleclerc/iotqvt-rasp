@@ -1,4 +1,4 @@
-package fr.iotqvt.rasp.infra;
+package fr.iotqvt.rasp.infra.websocket;
 
 import java.io.IOException;
 import java.net.URI;
