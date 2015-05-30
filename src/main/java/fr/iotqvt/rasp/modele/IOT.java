@@ -5,7 +5,8 @@ import java.util.List;
 public class IOT {
 	private String id;
 	private List<Capteur> capteurs;
-	private Piece piece;
+//	private Piece piece;
+	private String master;
 	public String getId() {
 		return id;
 	}
@@ -18,12 +19,19 @@ public class IOT {
 	public void setCapteurs(List<Capteur> capteurs) {
 		this.capteurs = capteurs;
 	}
-	public Piece getPiece() {
-		return piece;
+	public String getMaster() {
+		return master;
 	}
-	public void setPiece(Piece piece) {
-		this.piece = piece;
+	public void setMaster(String master) {
+		this.master = master;
 	}
 	
+//	public Piece getPiece() {
+//		return piece;
+//	}
+//	public void setPiece(Piece piece) {
+//		this.piece = piece;
+//	}
+//	
 	
 }

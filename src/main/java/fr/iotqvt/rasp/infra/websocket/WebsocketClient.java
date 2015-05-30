@@ -13,7 +13,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-import fr.iotqvt.rasp.modele.MesureMessage;
+import fr.iotqvt.rasp.modele.Mesure;
 
 @ClientEndpoint
 public class WebsocketClient {
@@ -51,7 +51,9 @@ public class WebsocketClient {
     public void sendMessage(String message) {
         this.session.getAsyncRemote().sendText(message);
     }
-    public void sendMesureMessage(MesureMessage m) {
+
+
+    public synchronized  void sendMesure(Mesure m) {
     	if(session == null){
     		 try {
 				connect() ;
@@ -64,7 +66,6 @@ public class WebsocketClient {
     	}
     	
     }
-
 
 
 

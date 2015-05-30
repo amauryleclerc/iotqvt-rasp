@@ -11,7 +11,7 @@ import java.util.Date;
 
 import fr.iotqvt.rasp.modele.Mesure;
 
-public class CapteurTemperature implements Capteur{
+public class CapteurTemperature extends CapteurService{
 
 	private Path filePath;
 	private static CapteurTemperature instance;
@@ -104,9 +104,11 @@ public class CapteurTemperature implements Capteur{
 	public Mesure getMesure() {
 		Mesure resultat = new Mesure();
 		resultat.setValeur((float)getTemperature()/1000);
+//		resultat.setValeur( (float)20.55);
 		resultat.setDate(new Date().getTime());
 		return resultat;
 	}
+
 
 	
 

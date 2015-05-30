@@ -4,7 +4,7 @@ import java.util.Date;
 
 import fr.iotqvt.rasp.modele.Mesure;
 
-public class CapteurTest implements Capteur{
+public class CapteurTest extends CapteurService{
 
 
 
@@ -21,14 +21,14 @@ public class CapteurTest implements Capteur{
 		m.setDate(new Date().getTime());
 		return m;
 	}
-	public static Capteur  getInstance(){
+	public static CapteurService  getInstance(){
 		if(instance==null){
 			instance = new CapteurTest();
 		}
 		return instance;
 	}
 
-	
+
 
 
 }

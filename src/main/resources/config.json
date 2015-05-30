@@ -2,6 +2,7 @@
     "id":"rasp-amaury",
     "codeRegateEntite":"000000",
     "piece":"01",
+    "master":"ws://iotqvt-master.herokuapp.com/websocket/mesure",
     "capteurs":[
         {
             "id":"01",

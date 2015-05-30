@@ -1,40 +1,59 @@
 package fr.iotqvt.rasp.modele;
 
-import java.util.List;
-
 public class Capteur {
 	private String id;
-	private List<Mesure> mesures;
-	private TypeCapteur type;
-	private Long frequenceMesure;
+	private TypeCapteur typeCapteur;
+	private Integer frequenceMesures;
+	private String modele;
+	private Float refMin;
+	private Float refMax;
 
-	//Modele
-	//REF MIN MAX
-	
-	
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public List<Mesure> getMesures() {
-		return mesures;
+
+	public TypeCapteur getTypeCapteur() {
+		return typeCapteur;
 	}
-	public void setMesures(List<Mesure> mesures) {
-		this.mesures = mesures;
+
+	public void setTypeCapteur(TypeCapteur typeCapteur) {
+		this.typeCapteur = typeCapteur;
 	}
-	public TypeCapteur getType() {
-		return type;
+
+	public Integer getFrequenceMesures() {
+		return frequenceMesures;
 	}
-	public void setType(TypeCapteur type) {
-		this.type = type;
+
+	public void setFrequenceMesures(Integer frequenceMesures) {
+		this.frequenceMesures = frequenceMesures;
 	}
-	public Long getFrequenceMesure() {
-		return frequenceMesure;
+
+	public String getModele() {
+		return modele;
 	}
-	public void setFrequenceMesure(Long frequenceMesure) {
-		this.frequenceMesure = frequenceMesure;
+
+	public void setModele(String modele) {
+		this.modele = modele;
 	}
-	
+
+	public Float getRefMin() {
+		return refMin;
+	}
+
+	public void setRefMin(Float refMin) {
+		this.refMin = refMin;
+	}
+
+	public Float getRefMax() {
+		return refMax;
+	}
+
+	public void setRefMax(Float refMax) {
+		this.refMax = refMax;
+	}
+
 }
