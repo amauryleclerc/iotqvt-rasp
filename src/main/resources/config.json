@@ -27,4 +27,35 @@
             "ref-max":80
         }
     ]
+    
+    "id":"rasp-jerome",
+    "codeRegateEntite":"000001",
+    "piece":"07",
+    "master":"ws://iotqvt-master.herokuapp.com/websocket/mesure",
+    "capteurs":[
+        {
+            "id":"01",
+            "typeCapteur":{
+                "libelle":"temperature",
+                "unite":"°C"
+            },
+            "frequenceMesures":10000,
+            "modele":"DS18B20",
+            "ref-min":30,
+            "ref-max":5
+        },
+        {
+            "id":"02",
+            "typeCapteur":{
+                "libelle":"bruit",
+                "unite":"db"
+            },
+            "frequenceMesures":10000,
+            "modele":"BOB-09964",
+            "ref-min":20,
+            "ref-max":80
+        }
+    ]
+    
+    
 }
