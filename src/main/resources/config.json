@@ -1,34 +1,5 @@
 {
-    "id":"rasp-amaury",
-    "codeRegateEntite":"000000",
-    "piece":"01",
-    "master":"ws://iotqvt-master.herokuapp.com/websocket/mesure",
-    "capteurs":[
-        {
-            "id":"01",
-            "typeCapteur":{
-                "libelle":"temperature",
-                "unite":"°C"
-            },
-            "frequenceMesures":10000,
-            "modele":"DS18B20",
-            "ref-min":30,
-            "ref-max":5
-        },
-        {
-            "id":"02",
-            "typeCapteur":{
-                "libelle":"test",
-                "unite":"UNITE"
-            },
-            "frequenceMesures":5000,
-            "modele":"TEST",
-            "ref-min":null,
-            "ref-max":80
-        }
-    ]
-    
-    "id":"rasp-jerome",
+ "id":"rasp-jerome",
     "codeRegateEntite":"000001",
     "piece":"07",
     "master":"ws://iotqvt-master.herokuapp.com/websocket/mesure",
@@ -56,6 +27,5 @@
             "ref-max":80
         }
     ]
-    
     
 }
