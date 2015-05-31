@@ -12,7 +12,7 @@
                 "libelle":"test",
                 "unite":"UNITE"
             },
-            "frequenceMesures":5000,
+         	"frequenceMesures":5000,
             "modele":"TEST",
             "ref-min":null,
             "ref-max":80
