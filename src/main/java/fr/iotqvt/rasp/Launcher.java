@@ -25,6 +25,7 @@ public class Launcher {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+//		System.out.println("iott"+config.getId());
 		WebsocketClient wsc = null;
 		try {
 			wsc = new WebsocketClient(new URI(config.getMaster()));
@@ -32,6 +33,7 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		for(Capteur capteur : config.getCapteurs()){
+			capteur.setIot(config.getId());
 			CapteurService service = CapteurFactory.getCapteur(capteur);
 			CapteurTask task = new CapteurTask(service, wsc);
 			 new Thread(task).start();
