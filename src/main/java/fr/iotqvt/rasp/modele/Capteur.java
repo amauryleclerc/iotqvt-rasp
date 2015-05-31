@@ -8,6 +8,7 @@ public class Capteur {
 	private Float refMin;
 	private Float refMax;
 
+
 	public String getId() {
 		return id;
 	}
