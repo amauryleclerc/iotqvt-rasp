@@ -8,6 +8,8 @@ public class CapteurTask implements Runnable {
 
 	private CapteurService capteurService;
 	private WebsocketClient wsc;
+	
+	String newLine = System.getProperty("line.separator");
 
 	public CapteurTask(CapteurService capteurService, WebsocketClient wsc) {
 		super();
@@ -22,7 +24,8 @@ public class CapteurTask implements Runnable {
 			while (true) {
 				Mesure m = capteurService.getMesure();
 				System.out.println("mesure :" + m);
-				wsc.sendMesure(m);
+				System.out.println(newLine);
+								wsc.sendMesure(m);
 				Thread.sleep(capteurService.getCapteurInfo().getFrequenceMesures());
 			}
 
