@@ -6,9 +6,6 @@ import fr.iotqvt.rasp.modele.Mesure;
 
 public class CapteurTest extends CapteurService{
 
-
-
-	private static CapteurTest instance;
 	
 	private CapteurTest() {
 		super();
@@ -23,10 +20,7 @@ public class CapteurTest extends CapteurService{
 		return m;
 	}
 	public static CapteurService  getInstance(){
-		if(instance==null){
-			instance = new CapteurTest();
-		}
-		return instance;
+		return new CapteurTest() ;
 	}
 
 
