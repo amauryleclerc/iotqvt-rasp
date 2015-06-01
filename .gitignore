@@ -2,4 +2,4 @@
 /.settings/
 /.project
 /.classpath
-/src/main/resources/config.json
++/config.json

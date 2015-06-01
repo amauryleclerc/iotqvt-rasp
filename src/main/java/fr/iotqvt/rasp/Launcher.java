@@ -32,6 +32,7 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		for(Capteur capteur : config.getCapteurs()){
+			capteur.setIot(config.getId());
 			CapteurService service = CapteurFactory.getCapteur(capteur);
 			CapteurTask task = new CapteurTask(service, wsc);
 			 new Thread(task).start();
