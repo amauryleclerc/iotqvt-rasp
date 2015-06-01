@@ -1,3 +1,25 @@
+
+{
+    "id":"rasp-amaury",
+    "codeRegateEntite":"000000",
+    "piece":"01",
+    "master":"ws://iotqvt-master.herokuapp.com/websocket/mesure",
+    "capteurs":[
+      
+        {
+            "id":"02",
+            "typeCapteur":{
+                "libelle":"test",
+                "unite":"UNITE"
+            },
+         	"frequenceMesures":5000,
+            "modele":"TEST",
+            "ref-min":null,
+            "ref-max":80
+        }
+    ]
+ }
+ 
 {
  "id":"rasp-jerome",
     "codeRegateEntite":"000001",
@@ -21,7 +43,7 @@
                 "libelle":"bruit",
                 "unite":"db"
             },
-            "frequenceMesures":1000,
+            "frequenceMesures":10000,
             "modele":"BOB-09964",
             "ref-min":20,
             "ref-max":80

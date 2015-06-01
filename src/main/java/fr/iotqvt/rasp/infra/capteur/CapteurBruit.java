@@ -124,8 +124,30 @@ public class CapteurBruit extends CapteurService {
 	    }
 	    chipSelectOutput.high(); 
 	    adcOut >>= 1; // Drop first bit
-	    return adcOut;
+	    return convertBOBToDB(adcOut);
 	  }
+	
+	
+	public static int convertBOBToDB (int adcInBOB) {
+		
+	    float adcDB = adcInBOB;
+	    int adcDBInt = adcInBOB;
+	    
+	    if ((adcInBOB < 500 )) {
+	    	adcDB = (float) (20);
+	    } else if ((adcInBOB >= 500) && ( adcInBOB <= 530 )) {
+	    	adcDB = (float) (0.059 * adcInBOB);
+	    } else if ((adcInBOB > 530) && ( adcInBOB <= 575 )) {
+	    	adcDB = (float) (0.107 * adcInBOB);
+	    } else if ((adcInBOB > 575) && ( adcInBOB <= 731 )) {
+	    	adcDB = (float) (0.096 * adcInBOB);
+	    } else if (adcInBOB > 731)  {
+	    	adcDB = (float) (80);	
+	    }
+	    adcDBInt = (int) adcDB ;
+	    return adcDBInt ;
+		
+	}
 	
 	
 	public static CapteurService  getInstance(){
