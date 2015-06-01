@@ -7,15 +7,6 @@ public class Capteur {
 	private String modele;
 	private Float refMin;
 	private Float refMax;
-	private String iot;
-
-	public String getIot() {
-		return iot;
-	}
-
-	public void setIot(String iot) {
-		this.iot = iot;
-	}
 
 	public String getId() {
 		return id;

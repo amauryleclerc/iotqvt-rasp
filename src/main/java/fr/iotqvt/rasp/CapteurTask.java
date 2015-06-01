@@ -20,9 +20,7 @@ public class CapteurTask implements Runnable {
 		try {
 
 			while (true) {
-				
 				Mesure m = capteurService.getMesure();
-				m.setCapteur(capteurService.getCapteurInfo());
 				System.out.println("mesure :" + m);
 				wsc.sendMesure(m);
 				Thread.sleep(capteurService.getCapteurInfo().getFrequenceMesures());

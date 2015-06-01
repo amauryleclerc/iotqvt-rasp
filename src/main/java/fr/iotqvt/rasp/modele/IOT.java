@@ -17,7 +17,7 @@ public class IOT {
 		return capteurs;
 	}
 	public void setCapteurs(List<Capteur> capteurs) {
-
+		this.capteurs = capteurs;
 	}
 	public String getMaster() {
 		return master;

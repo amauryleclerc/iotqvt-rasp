@@ -19,6 +19,7 @@ public class CapteurTest extends CapteurService{
 		Mesure m = new Mesure();
 		m.setValeur((float)(Math.random()*10+15));
 		m.setDate(new Date().getTime());
+		m.setCapteur(this.getCapteurInfo());
 		return m;
 	}
 	public static CapteurService  getInstance(){

@@ -1,8 +1,5 @@
 package fr.iotqvt.rasp.modele;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.google.gson.Gson;
 
 public class Mesure {
@@ -42,10 +39,6 @@ public class Mesure {
 	}
 	public void setDate(long date) {
 		this.date = date;
-	}
-	public String getDateString(){
-		
-		return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date(this.getDate()));
 	}
 	@Override
 	public String toString() {
