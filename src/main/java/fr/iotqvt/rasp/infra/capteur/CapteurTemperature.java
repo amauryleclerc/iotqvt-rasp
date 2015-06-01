@@ -106,6 +106,7 @@ public class CapteurTemperature extends CapteurService{
 		resultat.setValeur((float)getTemperature()/1000);
 //		resultat.setValeur( (float)20.55);
 		resultat.setDate(new Date().getTime());
+		resultat.setCapteur(this.getCapteurInfo());
 		return resultat;
 	}
 

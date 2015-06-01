@@ -83,7 +83,7 @@ public class CapteurBruit extends CapteurService {
 		
 		m.setValeur((float)(readMCP3008(ADC_CHANNEL)));
 		m.setDate(new Date().getTime());
-		
+		m.setCapteur(this.getCapteurInfo());
 		return m;
 	}
 	
