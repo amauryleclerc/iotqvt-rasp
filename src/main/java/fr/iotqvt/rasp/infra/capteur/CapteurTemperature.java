@@ -10,16 +10,20 @@ import java.nio.file.Path;
 import java.util.Date;
 
 import fr.iotqvt.rasp.modele.Mesure;
+import fr.iotqvt.rasp.infra.afficheur.*;
 
 public class CapteurTemperature extends CapteurService{
 
 	private Path filePath;
 	private static CapteurTemperature instance;
-
+	private AfficheurLedSimple afficheurLedSimple ;
+	
 	private CapteurTemperature() {
 		super();
 		this.runW1();
 		this.filePath = getDeviceFile();
+//		AfficheurLedSimple afficheurLedSimple = new AfficheurLedSimple();
+		afficheurLedSimple = AfficheurLedSimple.getInstance();
 	}
 	public static CapteurTemperature getInstance() {
 		if (instance == null) {
@@ -103,15 +107,42 @@ public class CapteurTemperature extends CapteurService{
 	@Override
 	public Mesure getMesure() {
 		Mesure resultat = new Mesure();
-		resultat.setValeur((float)getTemperature()/1000);
-//		resultat.setValeur( (float)20.55);
+		resultat.setValeur((float) getTemperature() / 1000);
+		// resultat.setValeur( (float)20.55);
 		resultat.setDate(new Date().getTime());
 		resultat.setCapteur(this.getCapteurInfo());
+		// Prévoir comme il existe un capteur service, un iot service
+		System.out.println("1");
+		
+		System.out.println(resultat.getValeur());
+		
+		// System.out.println(this.getCapteurInfo().getRefMin());
+		
+		// System.out.println(this.getCapteurInfo().getRefMax());
+		
+		// this.setEtatIOT(resultat.getValeur(),this.getCapteurInfo().getRefMin(),this.getCapteurInfo().getRefMax());
+		
+		this.setEtatIOT(10,15,20);
+
 		return resultat;
 	}
 
-
+	// Change l'état de l'IOT en comparaison de seuils du capteur correspondant à la classe
+	// plus tard, il faudra remonter au niveau de l'IOT ce changement d'état
 	
-
+	public void setEtatIOT(float valMesure, float valRefMin, float valRefMax) {
+		System.out.println("2");	
+		System.out.println("mesure :" + valMesure +" valRefMin :" + valRefMin + "valRefMax :" + valRefMax);			
+		if (valMesure < valRefMin) {
+				System.out.println("2.1");
+				this.afficheurLedSimple.clignote(1, 5);
+		   } else if ((valMesure >= valRefMin) && ( valMesure <= valRefMax )) {
+				System.out.println("2.2");
+			   this.afficheurLedSimple.off();
+		    } else if (valMesure > valRefMax) {
+				 System.out.println("2.3");
+		    	 this.afficheurLedSimple.on();
+		    }
+	}
 
 }

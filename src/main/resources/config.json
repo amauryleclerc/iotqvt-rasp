@@ -13,7 +13,7 @@
             "frequenceMesures":10000,
             "modele":"DS18B20",
             "ref-min":15,
-            "ref-max":25
+            "ref-max":28
         },
         {
             "id":"02",
