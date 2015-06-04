@@ -113,17 +113,9 @@ public class CapteurTemperature extends CapteurService{
 		resultat.setCapteur(this.getCapteurInfo());
 		// Prévoir comme il existe un capteur service, un iot service
 		System.out.println("1");
+			
+		this.setEtatIOT(resultat.getValeur(),this.getCapteurInfo().getRefMin(),this.getCapteurInfo().getRefMax());
 		
-		System.out.println(resultat.getValeur());
-		
-		// System.out.println(this.getCapteurInfo().getRefMin());
-		
-		// System.out.println(this.getCapteurInfo().getRefMax());
-		
-		// this.setEtatIOT(resultat.getValeur(),this.getCapteurInfo().getRefMin(),this.getCapteurInfo().getRefMax());
-		
-		this.setEtatIOT(10,15,20);
-
 		return resultat;
 	}
 
@@ -138,7 +130,7 @@ public class CapteurTemperature extends CapteurService{
 				this.afficheurLedSimple.clignote(1, 5);
 		   } else if ((valMesure >= valRefMin) && ( valMesure <= valRefMax )) {
 				System.out.println("2.2");
-			   this.afficheurLedSimple.off();
+			    this.afficheurLedSimple.off();
 		    } else if (valMesure > valRefMax) {
 				 System.out.println("2.3");
 		    	 this.afficheurLedSimple.on();
