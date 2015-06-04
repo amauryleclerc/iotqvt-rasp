@@ -1,9 +1,7 @@
 package fr.iotqvt.rasp;
 
-import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -21,7 +19,7 @@ public class Launcher {
 		
 		IOT config = null;
 		try {
-			 config = loadConfig();
+			 config = loadConfig(args[0]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -32,6 +30,7 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		for(Capteur capteur : config.getCapteurs()){
+			System.out.println(capteur.getRefMax());
 			capteur.setIot(config.getId());
 			CapteurService service = CapteurFactory.getCapteur(capteur);
 			CapteurTask task = new CapteurTask(service, wsc);
@@ -40,20 +39,10 @@ public class Launcher {
 
 	}
 
-	private static  IOT loadConfig() throws IOException{
-
-
-		InputStream input =   Launcher.class.getClassLoader().getResourceAsStream("config.json");
-		BufferedReader streamReader = new BufferedReader(new InputStreamReader(input, "UTF-8")); 
-		StringBuilder responseStrBuilder = new StringBuilder();
-
-		String inputStr;
-		while ((inputStr = streamReader.readLine()) != null){
-		    responseStrBuilder.append(inputStr);
-		}
-
+	private static  IOT loadConfig(String pathstr) throws IOException{
+		FileReader reader = new FileReader(pathstr);
 		Gson gson = new Gson();
-		return gson.fromJson(responseStrBuilder.toString(), IOT.class);
+		return gson.fromJson(reader, IOT.class);
 	}
 		
 }
