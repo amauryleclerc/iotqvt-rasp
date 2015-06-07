@@ -111,7 +111,7 @@ public class CapteurTemperature extends CapteurService{
 		// resultat.setValeur( (float)20.55);
 		resultat.setDate(new Date().getTime());
 		resultat.setCapteur(this.getCapteurInfo());
-		// Prévoir comme il existe un capteur service, un iot service
+ 
 		System.out.println("1");
 			
 		this.setEtatIOT(resultat.getValeur(),this.getCapteurInfo().getRefMin(),this.getCapteurInfo().getRefMax());
