@@ -112,8 +112,8 @@ public class CapteurTemperature extends CapteurService{
 		resultat.setDate(new Date().getTime());
 		resultat.setCapteur(this.getCapteurInfo());
  
-		System.out.println("1");
-			
+		System.out.println("TEMPERATURE °°°°°°°°°°°°°° :" + resultat.getValeur() );		
+		
 		this.setEtatIOT(resultat.getValeur(),this.getCapteurInfo().getRefMin(),this.getCapteurInfo().getRefMax());
 		
 		return resultat;
@@ -123,18 +123,13 @@ public class CapteurTemperature extends CapteurService{
 	// plus tard, il faudra remonter au niveau de l'IOT ce changement d'état
 	
 	public void setEtatIOT(float valMesure, float valRefMin, float valRefMax) {
-		System.out.println("2");	
-		System.out.println("mesure :" + valMesure +" valRefMin :" + valRefMin + "valRefMax :" + valRefMax);			
 		if (valMesure < valRefMin) {
-				System.out.println("2.1");
-				this.afficheurLedSimple.clignote(1, 5);
-		   } else if ((valMesure >= valRefMin) && ( valMesure <= valRefMax )) {
-				System.out.println("2.2");
-			    this.afficheurLedSimple.off();
-		    } else if (valMesure > valRefMax) {
-				 System.out.println("2.3");
-		    	 this.afficheurLedSimple.on();
+			this.afficheurLedSimple.clignote(1, 5);
+			this.afficheurLedSimple.off();
+				} else if ((valMesure >= valRefMin) && ( valMesure <= valRefMax )) {
+					this.afficheurLedSimple.off();
+						} else if (valMesure > valRefMax) {
+							this.afficheurLedSimple.on();
 		    }
 	}
-
 }

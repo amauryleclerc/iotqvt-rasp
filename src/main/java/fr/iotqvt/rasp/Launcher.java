@@ -19,12 +19,14 @@ public class Launcher {
 		
 		IOT config = null;
 		try {
+			 System.out.println("1");			
 			 config = loadConfig(args[0]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		WebsocketClient wsc = null;
 		try {
+			System.out.println("2");
 			wsc = new WebsocketClient(new URI(config.getMaster()));
 		} catch (URISyntaxException e) {
 			e.printStackTrace();

@@ -44,7 +44,7 @@ public class WebsocketClient {
     
     @OnMessage
     public void onMessage(String message) {
-    	System.out.println("message : "+message);
+    	// System.out.println("message : "+message);
     }
 
  
