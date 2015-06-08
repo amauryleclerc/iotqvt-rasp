@@ -40,7 +40,8 @@ public class CapteurBruit extends CapteurService {
 	private static Pin spiCs = RaspiPin.GPIO_06; // CS : CS
 	// Cs = Chip Select = GPIO25 = GPIO_GEN6
 
-	private static int ADC_CHANNEL = MCP3008_input_channels.CH0.ch();
+	private static int ADC_CHANNEL_BRUIT = MCP3008_input_channels.CH0.ch();
+	private static int ADC_CHANNEL_LUMI = MCP3008_input_channels.CH1.ch();
 	
 	public enum MCP3008_input_channels {
 		CH0(0), CH1(1), CH2(2), CH3(3), CH4(4), CH5(5), CH6(6), CH7(7);
@@ -81,7 +82,7 @@ public class CapteurBruit extends CapteurService {
 		
 		Mesure m = new Mesure();
 		
-		m.setValeur((float)(readMCP3008(ADC_CHANNEL)));
+		m.setValeur((float)(readMCP3008(ADC_CHANNEL_BRUIT)));
 		m.setDate(new Date().getTime());
 		m.setCapteur(this.getCapteurInfo());
 		
@@ -94,13 +95,15 @@ public class CapteurBruit extends CapteurService {
 	public static int readMCP3008(int channel)
 	  {
 		  
-	    chipSelectOutput.high(); 	
+	    int valRet =0;
+	    
+		chipSelectOutput.high(); 	
 	    
 	    clockOutput.low();		
 	    chipSelectOutput.low();
 	  
 	    int adccommand = channel;
-	    
+	    	    
 	    adccommand |= 0x18; // 0x18: 00011000
 	    adccommand <<= 3;
 	    for (int i=0; i<5; i++) 
@@ -127,7 +130,14 @@ public class CapteurBruit extends CapteurService {
 	    }
 	    chipSelectOutput.high(); 
 	    adcOut >>= 1; // Drop first bit
-	    return convertBOBToDB(adcOut);
+	    
+	    if (channel == ADC_CHANNEL_BRUIT )  {
+	    	valRet = convertBOBToDB(adcOut) ;
+	    } else if (channel == ADC_CHANNEL_LUMI) {
+	    	valRet = convertBOBToLUX(adcOut) ;
+	    }
+	      
+	    return valRet;
 	  }
 	
 	
@@ -151,6 +161,16 @@ public class CapteurBruit extends CapteurService {
 	    return adcDBInt ;
 		
 	}
+	
+
+	public static int convertBOBToLUX (int adcInLux) {
+		
+	    int adcDBInt = adcInLux;
+	    // voir quelle formule de calcul on applique. % ou réelle valeur en Lux a partir d'un étallonnage
+	    return adcDBInt ;
+	}
+
+	
 	
 	
 	public static CapteurService  getInstance(){
