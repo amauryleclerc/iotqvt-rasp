@@ -27,7 +27,7 @@ public class Launcher {
 		WebsocketClient wsc = null;
 		try {
 			System.out.println("2");
-			wsc = new WebsocketClient(new URI(config.getMaster()));
+			wsc = new WebsocketClient(new URI(config.getMaster()), config);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

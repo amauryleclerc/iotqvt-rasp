@@ -2,16 +2,17 @@ package fr.iotqvt.rasp.infra.websocket;
 
 import com.google.gson.Gson;
 
+import fr.iotqvt.rasp.modele.IOT;
 import fr.iotqvt.rasp.modele.Mesure;
 
-public class MesureMessage implements WsMessage {
+public class IdentificationMessage implements WsMessage {
 
 	private String type ;
-	private Mesure mesure ;
+	private IOT cedec ;
 	
-	public MesureMessage(Mesure m) {
-		this.type = "mesure" ;
-		this.mesure = m ;
+	public IdentificationMessage(IOT cedec) {
+		this.type = "identification" ;
+		this.cedec = cedec ;
 	}
 	
 	@Override
@@ -25,7 +26,7 @@ public class MesureMessage implements WsMessage {
 		return type;
 	}
 
-	public Mesure getMesure() {
-		return mesure;
+	public IOT getCedec() {
+		return this.cedec ;
 	}
 }
