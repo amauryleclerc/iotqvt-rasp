@@ -8,8 +8,7 @@ public class CapteurTask implements Runnable {
 
 	private CapteurService capteurService;
 	private WebsocketClient wsc;
-	
-	String newLine = System.getProperty("line.separator");
+	private static final String newLine = System.getProperty("line.separator");
 
 	public CapteurTask(CapteurService capteurService, WebsocketClient wsc) {
 		super();

@@ -56,6 +56,10 @@
 			<artifactId>javax.json-api</artifactId>
 			<version>1.0</version>
 		</dependency>
+
+
+
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -77,8 +81,8 @@
 				<configuration>
 					<archive>
 						<manifest>
-<!-- 							<addClasspath>true</addClasspath> -->
-<!-- 							<classpathPrefix>lib/</classpathPrefix> -->
+							<!-- <addClasspath>true</addClasspath> -->
+							<!-- <classpathPrefix>lib/</classpathPrefix> -->
 							<mainClass>fr.iotqvt.rasp.Launcher</mainClass>
 						</manifest>
 					</archive>
