@@ -12,12 +12,27 @@ import fr.iotqvt.rasp.infra.capteur.CapteurService;
 import fr.iotqvt.rasp.infra.websocket.WebsocketClient;
 import fr.iotqvt.rasp.modele.Capteur;
 import fr.iotqvt.rasp.modele.IOT;
+import fr.iotqvt.rasp.persistence.UseSQLiteDB;
+
 
 public class Launcher {
 
 	public static void main(String[] args) {
 		
 		IOT config = null;
+		
+		// init SQLite DB
+		// Création de la base si nécessaire
+		
+		try {
+			
+		   	UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
+			connexion.createDB(true);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		try {
 			 System.out.println("1");			
 			 config = loadConfig(args[0]);
