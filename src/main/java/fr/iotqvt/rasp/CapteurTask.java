@@ -27,18 +27,20 @@ public class CapteurTask implements Runnable {
 				Mesure m = capteurService.getMesure();
 				System.out.println("mesure :" + m);
 				System.out.println(newLine);
+
+				// Envoi de la mesure en websocket
+				wsc.sendMesure(m);
 				
 				// ajout de la mesure en base
-				
 				try {
 					UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
+					
 					connexion.addValue(m.getCapteur().getIot(),m.getCapteur().getId(),m.getDate(),m.getValeur());;
 					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				
-				wsc.sendMesure(m);
 				Thread.sleep(capteurService.getCapteurInfo().getFrequenceMesures());
 			}
 

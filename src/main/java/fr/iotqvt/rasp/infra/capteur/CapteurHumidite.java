@@ -96,8 +96,6 @@ public class CapteurHumidite extends CapteurService {
 	                
 	                float t = Float.parseFloat(vals[0]);
 	                float h = Float.parseFloat(vals[1]);
-	
-	                
 	                
 	                float lastTemp = 0;
 					float lastHum = 0;
@@ -119,6 +117,7 @@ public class CapteurHumidite extends CapteurService {
 	        // System.exit(-1);
 	    }
 	}
+		
 	
 	public Date getDateDHT() {
 		return dateDHT;

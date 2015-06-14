@@ -1,6 +1,5 @@
 package fr.iotqvt.rasp.persistence;
 
-// http://tips.androidhive.info/2013/10/android-insert-datetime-value-in-sqlite-database/
 
 import java.io.IOException;
 import java.sql.*;
@@ -39,27 +38,22 @@ public class UseSQLiteDB {
 		}
 	}
 
-	// Create DB if rebuild is false
-	
-	public void createDB(boolean rebuild) throws IOException {
-		
+	public void createDB() throws IOException {
 		    Connection c = null;
 		    Statement stmt = null;
 		    String sql =null;
 		    
 		    try {
-		    	
-			 Class.forName("org.sqlite.JDBC");
-			 c = DriverManager.getConnection("jdbc:sqlite:test.db");
+		     Class.forName("org.sqlite.JDBC");
+		     c = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
 			 System.out.println("Opened database successfully");
-		     
 			 stmt = c.createStatement();
 		      
 		     sql = "CREATE TABLE IF NOT EXISTS IOTCAPTEURS " +
-		                   "(ID_IOT INT     		NOT NULL," +
-		                   " ID_CAP INT     		NOT NULL," +
+		                   "(ID_IOT TEXT     		NOT NULL," +
+		                   " ID_CAP TEXT     		NOT NULL," +
 		                   " M_TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP    NOT NULL," +
-		                   " M_VAL  DECIMAL         NOT NULL," ;
+		                   " M_VAL  DECIMAL         NOT NULL );" ;
 		      
 		      stmt.executeUpdate(sql);
 		      stmt.close();
@@ -67,7 +61,6 @@ public class UseSQLiteDB {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 		    }
-		    System.out.println("Table created successfully");
 		  }
 
 	public void addValue(String id_iot, String id_cap, long m_timestamp, Float m_val) throws IOException  {
@@ -81,18 +74,17 @@ public class UseSQLiteDB {
 	      Class.forName("org.sqlite.JDBC");
 	      c = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
 	      c.setAutoCommit(false);
-	      System.out.println("addVAlue");
 
+
+	      // =>"YYYY-MM-DD HH:MM:SS"
 	      d = new Date(m_timestamp);
 	      
 	      // inserting data
 	      PreparedStatement prep = c.prepareStatement("insert into IOTCAPTEURS values(?,?,?,?);");
-	      prep.setInt(1, Integer.parseInt(id_iot)); 
-	      prep.setInt(2, Integer.parseInt(id_cap));
+	      prep.setString(1, id_iot); 
+	      prep.setString(2, id_cap);
 	      prep.setDate(3, d);
 	      prep.setFloat(4, m_val);
-	      
-	      System.out.println("requete ajout :"  );
 	      
 	      prep.execute();
 	      prep.close();
@@ -105,9 +97,8 @@ public class UseSQLiteDB {
 	    System.out.println("Records created successfully");
 	
 	}
-	
 
-	public void afficheValues () throws IOException {
+	public void getAllValues () throws IOException {
 	
 		  Connection c = null;
 		    Statement stmt = null;
@@ -115,21 +106,18 @@ public class UseSQLiteDB {
 		      Class.forName("org.sqlite.JDBC");
 		      c = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
 		      c.setAutoCommit(false);
-		      System.out.println("Opened database successfully");
 
 		      stmt = c.createStatement();
-		      ResultSet rs = stmt.executeQuery( "SELECT * FROM COMPANY;" );
+		      ResultSet rs = stmt.executeQuery( "SELECT * FROM IOTCAPTEURS;" );
+		      
 		      while ( rs.next() ) {
-		         int id = rs.getInt("id");
-		         String  name = rs.getString("name");
-		         int age  = rs.getInt("age");
-		         String  address = rs.getString("address");
-		         float salary = rs.getFloat("salary");
-		         System.out.println( "ID = " + id );
-		         System.out.println( "NAME = " + name );
-		         System.out.println( "AGE = " + age );
-		         System.out.println( "ADDRESS = " + address );
-		         System.out.println( "SALARY = " + salary );
+		         String id_iot = rs.getString("ID_IOT");
+		         String  id_cap = rs.getString("ID_CAP");
+		         Date date  = rs.getDate("M_TIMESTAMP");
+		         float val = rs.getFloat("M_VAL");
+		         System.out.println( "ID_IOT = " + id_iot );
+		         System.out.println( "ID_CAP = " + id_cap );
+		         System.out.println( "M_VAL = " + val );
 		         System.out.println();
 		      }
 		      rs.close();
@@ -142,46 +130,8 @@ public class UseSQLiteDB {
 		    System.out.println("Operation done successfully");
 		  }
 	
-	
-	public void setValues() throws IOException {
-		 Connection c = null;
-		    Statement stmt = null;
-		    try {
-		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
-		      c.setAutoCommit(false);
-		      System.out.println("Opened database successfully");
 
-		      stmt = c.createStatement();
-		      String sql = "UPDATE COMPANY set SALARY = 25000.00 where ID=1;";
-		      stmt.executeUpdate(sql);
-		      c.commit();
-
-		      ResultSet rs = stmt.executeQuery( "SELECT * FROM COMPANY;" );
-		      while ( rs.next() ) {
-		         int id = rs.getInt("id");
-		         String  name = rs.getString("name");
-		         int age  = rs.getInt("age");
-		         String  address = rs.getString("address");
-		         float salary = rs.getFloat("salary");
-		         System.out.println( "ID = " + id );
-		         System.out.println( "NAME = " + name );
-		         System.out.println( "AGE = " + age );
-		         System.out.println( "ADDRESS = " + address );
-		         System.out.println( "SALARY = " + salary );
-		         System.out.println();
-		      }
-		      rs.close();
-		      stmt.close();
-		      c.close();
-		    } catch ( Exception e ) {
-		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		      System.exit(0);
-		    }
-		    System.out.println("Operation done successfully");
-	}
-
-	public void delValues() throws IOException {
+	public void flushValues() throws IOException {
 
 	    Connection c = null;
 	    Statement stmt = null;
@@ -189,28 +139,11 @@ public class UseSQLiteDB {
 	      Class.forName("org.sqlite.JDBC");
 	      c = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
 	      c.setAutoCommit(false);
-	      System.out.println("Opened database successfully");
 
 	      stmt = c.createStatement();
-	      String sql = "DELETE from COMPANY where ID=2;";
+	      String sql = "DELETE * FROM IOTCAPTEURS;";
 	      stmt.executeUpdate(sql);
 	      c.commit();
-
-	      ResultSet rs = stmt.executeQuery( "SELECT * FROM COMPANY;" );
-	      while ( rs.next() ) {
-	         int id = rs.getInt("id");
-	         String  name = rs.getString("name");
-	         int age  = rs.getInt("age");
-	         String  address = rs.getString("address");
-	         float salary = rs.getFloat("salary");
-	         System.out.println( "ID = " + id );
-	         System.out.println( "NAME = " + name );
-	         System.out.println( "AGE = " + age );
-	         System.out.println( "ADDRESS = " + address );
-	         System.out.println( "SALARY = " + salary );
-	         System.out.println();
-	      }
-	      rs.close();
 	      stmt.close();
 	      c.close();
 	    } catch ( Exception e ) {
@@ -219,8 +152,6 @@ public class UseSQLiteDB {
 	    }
 	    System.out.println("Operation done successfully");
 	  }
-
-
 	
 }
 

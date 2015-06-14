@@ -27,27 +27,24 @@ public class Launcher {
 		try {
 			
 		   	UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
-			connexion.createDB(true);
+			connexion.createDB();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		try {
-			 System.out.println("1");			
 			 config = loadConfig(args[0]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		WebsocketClient wsc = null;
 		try {
-			System.out.println("2");
 			wsc = new WebsocketClient(new URI(config.getMaster()), config);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 		for(Capteur capteur : config.getCapteurs()){
-			System.out.println(capteur.getRefMax());
 			capteur.setIot(config.getId());
 			CapteurService service = CapteurFactory.getCapteur(capteur);
 			CapteurTask task = new CapteurTask(service, wsc);

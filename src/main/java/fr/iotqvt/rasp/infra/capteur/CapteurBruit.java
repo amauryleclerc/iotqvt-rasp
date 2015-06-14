@@ -19,7 +19,16 @@ public class CapteurBruit extends CapteurService {
 
 
 	private static CapteurBruit instance;
+	private static int lastValueDB;
 	
+	private static int getLastValueDB() {
+		return lastValueDB;
+	}
+
+	private static void setLastValueDB(int lastValue) {
+		CapteurBruit.lastValueDB = lastValue;
+	}
+
 	private CapteurBruit() {
 		super();
 	    this.initMCP3008();
@@ -65,7 +74,9 @@ public class CapteurBruit extends CapteurService {
 
 	public static void initMCP3008() {
 		gpio = GpioFactory.getInstance();
-
+        
+		CapteurBruit.setLastValueDB(20);
+		
 		mosiOutput = gpio.provisionDigitalOutputPin(spiMosi, "MOSI",PinState.LOW); 
 		misoInput = gpio.provisionDigitalInputPin(spiMiso, "MISO");
 		clockOutput = gpio.provisionDigitalOutputPin(spiClk, "CLK",	PinState.LOW); 
@@ -80,9 +91,19 @@ public class CapteurBruit extends CapteurService {
 	@Override
 	public Mesure getMesure() {
 		
+		int currentVal = 0;
+		
 		Mesure m = new Mesure();
 		
-		m.setValeur((float)(readMCP3008(ADC_CHANNEL_BRUIT)));
+		currentVal = readMCP3008(ADC_CHANNEL_BRUIT);
+		
+		if (Math.abs(currentVal - CapteurBruit.getLastValueDB()) >= 10) {
+			currentVal = CapteurBruit.getLastValueDB() ;
+		} else { 
+			 CapteurBruit.setLastValueDB(currentVal);
+		}
+		
+		m.setValeur((float)(currentVal));
 		m.setDate(new Date().getTime());
 		m.setCapteur(this.getCapteurInfo());
 		
