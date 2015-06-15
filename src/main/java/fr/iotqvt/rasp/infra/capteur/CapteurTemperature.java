@@ -10,20 +10,18 @@ import java.nio.file.Path;
 import java.util.Date;
 
 import fr.iotqvt.rasp.modele.Mesure;
-import fr.iotqvt.rasp.infra.afficheur.*;
 
 public class CapteurTemperature extends CapteurService{
 
 	private Path filePath;
 	private static CapteurTemperature instance;
-	private AfficheurLedSimple afficheurLedSimple ;
+
 	
 	private CapteurTemperature() {
 		super();
 		this.runW1();
 		this.filePath = getDeviceFile();
-//		AfficheurLedSimple afficheurLedSimple = new AfficheurLedSimple();
-		afficheurLedSimple = AfficheurLedSimple.getInstance();
+
 	}
 	public static CapteurTemperature getInstance() {
 		if (instance == null) {
@@ -111,25 +109,9 @@ public class CapteurTemperature extends CapteurService{
 		// resultat.setValeur( (float)20.55);
 		resultat.setDate(new Date().getTime());
 		resultat.setCapteur(this.getCapteurInfo());
- 
 		System.out.println("TEMPERATURE °°°°°°°°°°°°°° :" + resultat.getValeur() );		
-		
-		this.setEtatIOT(resultat.getValeur(),this.getCapteurInfo().getRefMin(),this.getCapteurInfo().getRefMax());
-		
 		return resultat;
 	}
 
-	// Change l'état de l'IOT en comparaison de seuils du capteur correspondant à la classe
-	// plus tard, il faudra remonter au niveau de l'IOT ce changement d'état
-	
-	public void setEtatIOT(float valMesure, float valRefMin, float valRefMax) {
-		if (valMesure < valRefMin) {
-			this.afficheurLedSimple.clignote(1, 5);
-			this.afficheurLedSimple.off();
-				} else if ((valMesure >= valRefMin) && ( valMesure <= valRefMax )) {
-					this.afficheurLedSimple.off();
-						} else if (valMesure > valRefMax) {
-							this.afficheurLedSimple.on();
-		    }
-	}
+
 }

@@ -17,12 +17,20 @@ import fr.iotqvt.rasp.persistence.UseSQLiteDB;
 
 public class Launcher {
 
+	
+
 	public static void main(String[] args) {
 		
 		IOT config = null;
 		
+		String Meteo = args[1];
+		String Persistance = args[2];
+		
 		// init SQLite DB
 		// Création de la base si nécessaire
+		
+		// Comment fixer une variable qui permette par la suite dans Capteur Task d'accéder à son contenu ?
+		// peut etre créer une classe args ayant des méthodes qui recherchent si la valeure figure dans au moins un argument
 		
 		try {
 			
@@ -48,7 +56,7 @@ public class Launcher {
 			capteur.setIot(config.getId());
 			CapteurService service = CapteurFactory.getCapteur(capteur);
 			CapteurTask task = new CapteurTask(service, wsc);
-			 new Thread(task).start();
+			new Thread(task).start();
 		}
 
 	}

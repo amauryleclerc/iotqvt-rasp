@@ -8,6 +8,16 @@ public class Capteur {
 	private Float refMin;
 	private Float refMax;
 	private String iot;
+	private String meteo;
+	
+	public String getMeteo() {
+		return meteo;
+	}
+
+	public void setMeteo(String meteo) {
+		this.meteo = meteo;
+	}
+
 	public String getId() {
 		return id;
 	}
