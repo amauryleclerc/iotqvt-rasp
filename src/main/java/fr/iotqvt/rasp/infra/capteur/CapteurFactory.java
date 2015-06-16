@@ -27,7 +27,6 @@ public class CapteurFactory {
 		if (service != null) {
 			service.setCapteurInfo(capteur);
 		}
-
 		return service;
 
 	}

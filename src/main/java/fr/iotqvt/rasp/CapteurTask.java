@@ -9,7 +9,9 @@ import fr.iotqvt.rasp.modele.Mesure;
 import fr.iotqvt.rasp.persistence.UseSQLiteDB;
 
 public class CapteurTask implements Runnable {
-
+	
+	private final static String TYPE_CAPTEUR_TEMPERATURE = "temperature";
+	
 	private CapteurService capteurService;
 	private WebsocketClient wsc;
 	private static final String newLine = System.getProperty("line.separator");
@@ -27,8 +29,6 @@ public class CapteurTask implements Runnable {
 	public void run() {
 		
 		String s1Capteur = null;
-		String s2Mesure = "temperature";
-		String s3Meteo ="OK";
 		
 		try {
 			while (true) {
@@ -38,6 +38,8 @@ public class CapteurTask implements Runnable {
 				System.out.println(newLine);
 				// Envoi de la mesure en websocket
 				wsc.sendMesure(m);
+				
+				
 				// pour tous les capteurs ajout de la mesure en base
 				try {
 					UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
@@ -46,10 +48,13 @@ public class CapteurTask implements Runnable {
 					e.printStackTrace();
 				}
 				
-				if (capteurService.getCapteurInfo().getMeteo().equals(s3Meteo)) {
+				// si il s'agit d'un capteur ayant une indication d'état
+				if ( m.getCapteur().getPinmeteo() != 0) {
+					 System.out.println("METEO");					
 					// pour le capteur de température, changer état IOT
 					s1Capteur = capteurService.getCapteurInfo().getTypeCapteur().getLibelle();
-					if (s1Capteur.equals(s2Mesure)) {
+					if (s1Capteur.equals(TYPE_CAPTEUR_TEMPERATURE)) {
+						System.out.println("METEO TEMP");
 						this.setEtatIOT(m.getValeur(),capteurService.getCapteurInfo().getRefMin(),capteurService.getCapteurInfo().getRefMax());
 					}
 				}
@@ -57,20 +62,18 @@ public class CapteurTask implements Runnable {
 				Thread.sleep(capteurService.getCapteurInfo().getFrequenceMesures());
 			}
 		} catch (InterruptedException e) {
+			
+			// pourquoi c'est vide ici ?
 		}
 	}
-	
-	// Change l'état de l'IOT en comparaison de seuils du capteur correspondant à la classe
-	// plus tard, il faudra remonter au niveau de l'IOT ce changement d'état
-	
+
+	// pour l'instant utilisable pour tout les capteurs
 	public void setEtatIOT(float valMesure, float valRefMin, float valRefMax) {
 		if (valMesure < valRefMin) {
 			System.out.println("INF");			
 			this.afficheurLedSimple.clignote(1, 2);
-			this.afficheurLedSimple.off();
 				} else if ((valMesure >= valRefMin) && ( valMesure <= valRefMax )) {
 					System.out.println("OK");	
-					this.afficheurLedSimple.off();
 					this.afficheurLedSimple.off();
 						} else if (valMesure > valRefMax) {
 							System.out.println("SUP");								

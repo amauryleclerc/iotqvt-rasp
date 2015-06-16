@@ -5,8 +5,10 @@ import java.util.List;
 public class IOT {
 	private String id;
 	private List<Capteur> capteurs;
-//	private Piece piece;
 	private String master;
+	private int persistance;
+	private int pinled ;
+	
 	public String getId() {
 		return id;
 	}
@@ -25,13 +27,17 @@ public class IOT {
 	public void setMaster(String master) {
 		this.master = master;
 	}
-	
-//	public Piece getPiece() {
-//		return piece;
-//	}
-//	public void setPiece(Piece piece) {
-//		this.piece = piece;
-//	}
-//	
+	public int getPinled() {
+		return pinled;
+	}
+	public void setPinled(int pinled) {
+		this.pinled = pinled;
+	}
+	public int getPersistance() {
+		return persistance;
+	}
+	public void setPersistance(int persistance) {
+		this.persistance = persistance;
+	}
 	
 }
