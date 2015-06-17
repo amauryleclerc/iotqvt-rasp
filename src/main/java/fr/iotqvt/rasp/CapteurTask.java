@@ -34,27 +34,41 @@ public class CapteurTask implements Runnable {
 			while (true) {
 				
 				Mesure m = capteurService.getMesure();
-				System.out.println("mesure :" + m);
-				System.out.println(newLine);
+//				System.out.println("mesure :" + m);
+//				System.out.println(newLine);
 				// Envoi de la mesure en websocket
 				wsc.sendMesure(m);
 				
 				
-				// pour tous les capteurs ajout de la mesure en base
-				try {
-					UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
-					connexion.addValue(m.getCapteur().getIot(),m.getCapteur().getId(),m.getDate(),m.getValeur());;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				// si la persistance est requise pour un IOT, alors pour tous les capteurs, on ajoute la mesure en base
 				
-				// si il s'agit d'un capteur ayant une indication d'état
-				if ( m.getCapteur().getPinmeteo() != 0) {
-					 System.out.println("METEO");					
+/*				if (m.getCapteur().getCdec().getPersistance() == 1) {
+
+					try {
+						UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
+						System.out.println("ADD VALUE");
+						connexion.addValue(m.getCapteur().getIot(),m.getCapteur().getId(),m.getDate(),m.getValeur());;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}*/
+				
+				// si le cdec doit afficher un état, et que le capteurs influe sur l'état alors on influe sur l'état de l'IOT
+	
+				System.out.println("-------------------------------------------------------");
+				
+				int pinMeteoCDEC = m.getCapteur().getCdec().getPinmeteo();
+				int pinMeteoCapteur = m.getCapteur().getPinmeteocapteur();
+				
+				System.out.println("METEO pour ce CDEC et CAPTEUR" + pinMeteoCDEC + "/" + pinMeteoCapteur);
+				
+				
+				if ((pinMeteoCDEC != 0) & (pinMeteoCapteur != 0)) {
+					 System.out.println("METEO pour ce CDEC");					
 					// pour le capteur de température, changer état IOT
 					s1Capteur = capteurService.getCapteurInfo().getTypeCapteur().getLibelle();
 					if (s1Capteur.equals(TYPE_CAPTEUR_TEMPERATURE)) {
-						System.out.println("METEO TEMP");
+						System.out.println("METEO piloté par la température");
 						this.setEtatIOT(m.getValeur(),capteurService.getCapteurInfo().getRefMin(),capteurService.getCapteurInfo().getRefMax());
 					}
 				}
@@ -66,6 +80,7 @@ public class CapteurTask implements Runnable {
 			// pourquoi c'est vide ici ?
 		}
 	}
+	
 
 	// pour l'instant utilisable pour tout les capteurs
 	public void setEtatIOT(float valMesure, float valRefMin, float valRefMax) {

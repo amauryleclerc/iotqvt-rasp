@@ -8,6 +8,7 @@ public class CapteurFactory {
 	private final static String TYPE_CAPTEUR_BRUIT = "bruit";
 	private final static String TYPE_CAPTEUR_HUMIDITE = "humidite";
 	private final static String TYPE_CAPTEUR_LUMINOSITE = "luminosite";
+
 	
 	public static CapteurService getCapteur(Capteur capteur) {
 

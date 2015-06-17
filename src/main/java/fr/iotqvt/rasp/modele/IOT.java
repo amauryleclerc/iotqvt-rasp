@@ -7,10 +7,16 @@ public class IOT {
 	private List<Capteur> capteurs;
 	private String master;
 	private int persistance;
-	private int pinled ;
+	private int pinmeteo ;
 	
 	public String getId() {
 		return id;
+	}
+	public int getPinmeteo() {
+		return pinmeteo;
+	}
+	public void setPinmeteo(int pinmeteo) {
+		this.pinmeteo = pinmeteo;
 	}
 	public void setId(String id) {
 		this.id = id;
@@ -26,12 +32,6 @@ public class IOT {
 	}
 	public void setMaster(String master) {
 		this.master = master;
-	}
-	public int getPinled() {
-		return pinled;
-	}
-	public void setPinled(int pinled) {
-		this.pinled = pinled;
 	}
 	public int getPersistance() {
 		return persistance;

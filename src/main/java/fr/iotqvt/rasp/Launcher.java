@@ -32,19 +32,20 @@ public class Launcher {
 		// init SQLite DB en fonction de l'iot persistance du fichier config.json
 		// Création de la base si nécessaire
 		
-		if (config.getPersistance() == 1) {
+/*		if (config.getPersistance() == 1) {
 			try {
 			
 				System.out.println("PERSISTANCE");
 				UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
 				connexion.createDB();
 			    try{
-			        Thread.sleep(2000);
+			        Thread.sleep(1000);
 			        }catch(InterruptedException e){}
 				} catch (IOException e) {
 				e.printStackTrace();
 				}
-		}
+		}*/
+		
 		WebsocketClient wsc = null;
 		try {
 			wsc = new WebsocketClient(new URI(config.getMaster()), config);
@@ -53,8 +54,11 @@ public class Launcher {
 		}
 		for(Capteur capteur : config.getCapteurs()){
 			capteur.setIot(config.getId());
+			
+			System.out.println("CAPTEUR ...... " + capteur.getId());			
 			CapteurService service = CapteurFactory.getCapteur(capteur);
 			CapteurTask task = new CapteurTask(service, wsc);
+			System.out.println("TASK ...... ");	
 			new Thread(task).start();
 		}
 	}
