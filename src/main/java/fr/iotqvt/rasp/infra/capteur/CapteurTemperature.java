@@ -106,10 +106,8 @@ public class CapteurTemperature extends CapteurService{
 	public Mesure getMesure() {
 		Mesure resultat = new Mesure();
 		resultat.setValeur((float) getTemperature() / 1000);
-		// resultat.setValeur( (float)20.55);
 		resultat.setDate(new Date().getTime());
 		resultat.setCapteur(this.getCapteurInfo());
-		System.out.println("TEMPERATURE °°°°°°°°°°°°°° :" + resultat.getValeur() );		
 		return resultat;
 	}
 

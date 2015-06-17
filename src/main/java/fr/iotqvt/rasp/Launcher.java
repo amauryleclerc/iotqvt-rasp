@@ -23,8 +23,8 @@ public class Launcher {
 		
 		IOT config = null;
 		
-		String Meteo = args[1];
-		String Persistance = args[2];
+//		String Meteo = args[1];
+//		String Persistance = args[2];
 		
 		// init SQLite DB
 		// Création de la base si nécessaire
@@ -32,14 +32,14 @@ public class Launcher {
 		// Comment fixer une variable qui permette par la suite dans Capteur Task d'accéder à son contenu ?
 		// peut etre créer une classe args ayant des méthodes qui recherchent si la valeure figure dans au moins un argument
 		
-		try {
-			
-		   	UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
-			connexion.createDB();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			
+//		   	UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
+//			connexion.createDB();
+//			
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		try {
 			 config = loadConfig(args[0]);
