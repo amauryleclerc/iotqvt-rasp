@@ -22,7 +22,12 @@ public class CapteurTask implements Runnable {
 		super();
 		this.wsc = wsc;
 		this.capteurService = capteurService;
-		afficheurLedSimple = AfficheurLedSimple.getInstance();
+
+		int valPinmeteo = capteurService.getCapteurInfo().getCdec().getPinmeteo();
+		
+		if (valPinmeteo !=0 ) {
+			afficheurLedSimple = AfficheurLedSimple.getInstance();
+		}		
 	}
 
 	@Override
