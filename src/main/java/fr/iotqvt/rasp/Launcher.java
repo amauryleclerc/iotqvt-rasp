@@ -45,7 +45,7 @@ public class Launcher {
 				e.printStackTrace();
 				}
 		}*/
-		
+		System.out.println("pin "+config.getPinmeteo());
 		WebsocketClient wsc = null;
 		try {
 			wsc = new WebsocketClient(new URI(config.getMaster()), config);
@@ -54,7 +54,7 @@ public class Launcher {
 		}
 		for(Capteur capteur : config.getCapteurs()){
 			capteur.setIot(config.getId());
-			
+			capteur.setCdec(config);
 			System.out.println("CAPTEUR ...... " + capteur.getId());			
 			CapteurService service = CapteurFactory.getCapteur(capteur);
 			CapteurTask task = new CapteurTask(service, wsc);

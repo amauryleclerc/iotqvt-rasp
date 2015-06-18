@@ -2,7 +2,7 @@ package fr.iotqvt.rasp.modele;
 
 public class Capteur {
 	private String id;
-	private IOT cdec;
+	private transient  IOT cdec;
 	private TypeCapteur typeCapteur;
 	private Integer frequenceMesures;
 	private String modele;

@@ -41,13 +41,14 @@ public class CapteurTask implements Runnable {
 				Mesure m = capteurService.getMesure();
 //				System.out.println("mesure :" + m);
 //				System.out.println(newLine);
+				
 				// Envoi de la mesure en websocket
 				wsc.sendMesure(m);
 				
 				
 				// si la persistance est requise pour un IOT, alors pour tous les capteurs, on ajoute la mesure en base
 				
-/*				if (m.getCapteur().getCdec().getPersistance() == 1) {
+				if (m.getCapteur().getCdec().getPersistance() == 1) {
 
 					try {
 						UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
@@ -56,7 +57,7 @@ public class CapteurTask implements Runnable {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}*/
+				}
 				
 				// si le cdec doit afficher un état, et que le capteurs influe sur l'état alors on influe sur l'état de l'IOT
 	
