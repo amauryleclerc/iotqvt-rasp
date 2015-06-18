@@ -18,9 +18,8 @@ import fr.iotqvt.rasp.persistence.UseSQLiteDB;
 
 public class Launcher {
 
-	
-
 	public static void main(String[] args) {
+	
 		IOT config = null;
 		
 		try {
@@ -32,7 +31,7 @@ public class Launcher {
 		// init SQLite DB en fonction de l'iot persistance du fichier config.json
 		// Création de la base si nécessaire
 		
-/*		if (config.getPersistance() == 1) {
+		if (config.getPersistance() == 1) {
 			try {
 			
 				System.out.println("PERSISTANCE");
@@ -44,7 +43,7 @@ public class Launcher {
 				} catch (IOException e) {
 				e.printStackTrace();
 				}
-		}*/
+		}
 		System.out.println("pin "+config.getPinmeteo());
 		WebsocketClient wsc = null;
 		try {
