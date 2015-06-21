@@ -60,18 +60,21 @@ public class WebsocketClient {
     }
 
 
-    public synchronized  void sendMesure(Mesure m) {
+    public synchronized  boolean   sendMesure(Mesure m) {
     	MesureMessage msg = new MesureMessage(m);
     	System.out.println(new MesureMessage(m));
     	if(session == null){
     		 try {
 				connect() ;
 				this.session.getAsyncRemote().sendObject(msg);
+				return true;
 			} catch (DeploymentException | IOException e) {
 				System.out.println("connexion impossible "+e.getMessage());
+				return false;
 			}
     	}else{
     		this.session.getAsyncRemote().sendObject(msg);
+    		return true;
     	}
     	
     }
