@@ -4,6 +4,8 @@ package fr.iotqvt.rasp.persistence;
 import java.io.IOException;
 import java.sql.*;
 
+import fr.iotqvt.rasp.modele.Mesure;
+
 public class UseSQLiteDB {
 	
 	private String DBPath = "./iotqvt.db";
@@ -152,6 +154,19 @@ public class UseSQLiteDB {
 	    }
 	    System.out.println("Operation done successfully");
 	  }
+
+	public boolean findValueToSynchro(Mesure mesureFromBD)  throws IOException {
+		// TODO Auto-generated method stub
+		
+		
+		return true;
+		
+	}
+
+	public void updateValue(Mesure mesureFromDB) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 

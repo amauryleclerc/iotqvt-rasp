@@ -43,7 +43,7 @@ public class CapteurTask implements Runnable {
 //				System.out.println(newLine);
 				
 				// Envoi de la mesure en websocket
-				wsc.sendMesure(m);
+				boolean result =	wsc.sendMesure(m);
 				
 				
 				// si la persistance est requise pour un IOT, alors pour tous les capteurs, on ajoute la mesure en base

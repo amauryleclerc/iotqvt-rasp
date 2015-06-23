@@ -45,6 +45,7 @@ public class Launcher {
 				}
 		}
 		System.out.println("pin "+config.getPinmeteo());
+		
 		WebsocketClient wsc = null;
 		try {
 			wsc = new WebsocketClient(new URI(config.getMaster()), config);
@@ -60,6 +61,14 @@ public class Launcher {
 			System.out.println("TASK ...... ");	
 			new Thread(task).start();
 		}
+
+		// Lancement de la tache de synchro des values si déco
+
+		if (config.getPersistance() == 1) {
+			IotSynchroDbTask taskSyncrhoDB = new IotSynchroDbTask(wsc);
+			new Thread(taskSyncrhoDB).start();
+		}
+		
 	}
 
 	private static  IOT loadConfig(String pathstr) throws IOException{

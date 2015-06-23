@@ -23,8 +23,13 @@ public class WebsocketClient {
     private Session session = null;
     private URI endpointURI = null;
     private IOT cedec ;
+    private boolean connectionImpossible = false;
     
-    public WebsocketClient(URI endpointURI, IOT cedec) {
+    public boolean isConnectionImpossible() {
+		return connectionImpossible;
+	}
+
+	public WebsocketClient(URI endpointURI, IOT cedec) {
     	this.endpointURI = endpointURI;
     	this.cedec = cedec ;
     }
@@ -69,9 +74,11 @@ public class WebsocketClient {
 				this.session.getAsyncRemote().sendObject(msg);
 			} catch (DeploymentException | IOException e) {
 				System.out.println("connexion impossible "+e.getMessage());
+				connectionImpossible = true;
 			}
     	}else{
     		this.session.getAsyncRemote().sendObject(msg);
+    		connectionImpossible = false;
     	}
     	
     }
@@ -85,9 +92,11 @@ public class WebsocketClient {
 				this.session.getAsyncRemote().sendObject(msg);
 			} catch (DeploymentException | IOException e) {
 				System.out.println("connexion impossible "+e.getMessage());
+				connectionImpossible = true;
 			}
     	}else{
 				this.session.getAsyncRemote().sendObject(msg);
+				connectionImpossible = false;
     	}
     	
     }
