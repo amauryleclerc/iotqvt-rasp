@@ -23,13 +23,8 @@ public class WebsocketClient {
     private Session session = null;
     private URI endpointURI = null;
     private IOT cedec ;
-    private boolean connectionImpossible = false;
     
-    public boolean isConnectionImpossible() {
-		return connectionImpossible;
-	}
-
-	public WebsocketClient(URI endpointURI, IOT cedec) {
+    public WebsocketClient(URI endpointURI, IOT cedec) {
     	this.endpointURI = endpointURI;
     	this.cedec = cedec ;
     }
@@ -65,20 +60,21 @@ public class WebsocketClient {
     }
 
 
-    public synchronized  void sendMesure(Mesure m) {
+    public synchronized  boolean   sendMesure(Mesure m) {
     	MesureMessage msg = new MesureMessage(m);
     	System.out.println(new MesureMessage(m));
     	if(session == null){
     		 try {
 				connect() ;
 				this.session.getAsyncRemote().sendObject(msg);
+				return true;
 			} catch (DeploymentException | IOException e) {
 				System.out.println("connexion impossible "+e.getMessage());
-				connectionImpossible = true;
+				return false;
 			}
     	}else{
     		this.session.getAsyncRemote().sendObject(msg);
-    		connectionImpossible = false;
+    		return true;
     	}
     	
     }
@@ -92,11 +88,9 @@ public class WebsocketClient {
 				this.session.getAsyncRemote().sendObject(msg);
 			} catch (DeploymentException | IOException e) {
 				System.out.println("connexion impossible "+e.getMessage());
-				connectionImpossible = true;
 			}
     	}else{
 				this.session.getAsyncRemote().sendObject(msg);
-				connectionImpossible = false;
     	}
     	
     }
