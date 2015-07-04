@@ -5,10 +5,18 @@ import java.util.List;
 public class IOT {
 	private String id;
 	private List<Capteur> capteurs;
-//	private Piece piece;
 	private String master;
+	private Integer persistance =0;
+	private Integer pinmeteo =0 ;
+	
 	public String getId() {
 		return id;
+	}
+	public Integer getPinmeteo() {
+		return pinmeteo;
+	}
+	public void setPinmeteo(Integer pinmeteo) {
+		this.pinmeteo = pinmeteo;
 	}
 	public void setId(String id) {
 		this.id = id;
@@ -25,13 +33,11 @@ public class IOT {
 	public void setMaster(String master) {
 		this.master = master;
 	}
-	
-//	public Piece getPiece() {
-//		return piece;
-//	}
-//	public void setPiece(Piece piece) {
-//		this.piece = piece;
-//	}
-//	
+	public Integer getPersistance() {
+		return persistance;
+	}
+	public void setPersistance(Integer persistance) {
+		this.persistance = persistance;
+	}
 	
 }

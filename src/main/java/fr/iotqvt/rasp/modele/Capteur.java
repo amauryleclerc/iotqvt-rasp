@@ -2,20 +2,21 @@ package fr.iotqvt.rasp.modele;
 
 public class Capteur {
 	private String id;
+	private transient  IOT cdec;
 	private TypeCapteur typeCapteur;
 	private Integer frequenceMesures;
 	private String modele;
 	private Float refMin;
 	private Float refMax;
 	private String iot;
-	private String meteo;
-	
-	public String getMeteo() {
-		return meteo;
+	private int pinmeteocapteur =0;
+
+	public int getPinmeteocapteur() {
+		return pinmeteocapteur;
 	}
 
-	public void setMeteo(String meteo) {
-		this.meteo = meteo;
+	public void setPinmeteocapteur(int pinmeteocapteur) {
+		this.pinmeteocapteur = pinmeteocapteur;
 	}
 
 	public String getId() {
@@ -72,6 +73,14 @@ public class Capteur {
 
 	public void setIot(String iot) {
 		this.iot = iot;
+	}
+
+	public IOT getCdec() {
+		return cdec;
+	}
+
+	public void setCdec(IOT cdec) {
+		this.cdec = cdec;
 	}
 
 }
