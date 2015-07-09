@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{dd/MM/yyyy HH:mm:ss} %-5p %C{1}.%M() %x - %m%n" />
+            <param name="ConversionPattern" value="%d{dd/MM/yyyy HH:mm:ss} %-5p %C{1} %x - %m%n" />
         </layout>
     </appender>
     <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
@@ -11,7 +11,7 @@
         <param name="MaxBackupIndex" value="5" />
         <param name="File" value="iotrasp.log" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="[%d{dd/MM/yy HH:mm:ss}] %-5p %C{1}.%M() %m%n" />
+            <param name="ConversionPattern" value="[%d{dd/MM/yy HH:mm:ss}] %-5p %C.%M(%L)%n %m%n" />
         </layout>
     </appender>
     <logger name="fr.iotqvt.rasp.IotSynchroDbTask" additivity="false">
@@ -19,10 +19,6 @@
         <appender-ref ref="FILE" />
     </logger>
     <logger name="fr.iotqvt.rasp.infra.websocket.WebsocketClient" additivity="false">
-        <level value="debug" />
-        <appender-ref ref="CONSOLE" />
-    </logger>
-    <logger name="fr.iotqvt.rasp.Launcher" additivity="false">
         <level value="debug" />
         <appender-ref ref="CONSOLE" />
     </logger>
