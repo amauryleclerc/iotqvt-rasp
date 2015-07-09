@@ -6,6 +6,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.Delayed;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 
 import fr.iotqvt.rasp.infra.capteur.CapteurFactory;
@@ -18,8 +21,11 @@ import fr.iotqvt.rasp.persistence.UseSQLiteDB;
 
 public class Launcher {
 
+	private static Logger LOG = LogManager.getLogger(Launcher.class);
+	
 	public static void main(String[] args) {
 	
+		LOG.info("Démarrage du CEDEC...");
 		IOT config = null;
 
 		
@@ -35,7 +41,7 @@ public class Launcher {
 		if (config.getPersistance() == 1) {
 			try {
 			
-				System.out.println("PERSISTANCE");
+				LOG.info("Persistance interne activée.");
 				UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
 				connexion.createDB();
 			    try{
@@ -44,8 +50,15 @@ public class Launcher {
 				} catch (IOException e) {
 				e.printStackTrace();
 				}
+		} else {
+			LOG.info("Aucune persistance interne.");			
 		}
-		System.out.println("pin "+config.getPinmeteo());
+		
+		if (config.getPinmeteo()>0) {
+			LOG.info("Led d'état déclarée sur la pin "+config.getPinmeteo());
+		} else {
+			LOG.info("Aucune led d'état déclarée.");			
+		}		
 		
 		WebsocketClient wsc = null;
 		try {
@@ -56,17 +69,16 @@ public class Launcher {
 		for(Capteur capteur : config.getCapteurs()){
 			capteur.setIot(config.getId());
 			capteur.setCdec(config);
-			System.out.println("CAPTEUR ...... " + capteur.getId());			
 			CapteurService service = CapteurFactory.getCapteur(capteur);
 			CapteurTask task = new CapteurTask(service, wsc);
-			System.out.println("TASK ...... ");	
+			LOG.info("Lancement du capteur "+capteur.getId()+" | "+capteur.getTypeCapteur().getLibelle()+"("+capteur.getTypeCapteur().getUnite()+")");
 			new Thread(task).start();
 		}
 
 		// Lancement de la tache de synchro des values si déco
 
 		if (config.getPersistance() == 1) {
-			System.out.println("TASK pour la syncrho des valeurs ...... ");	
+			LOG.info("Lancement de la tache de synchro.");
 			IotSynchroDbTask taskSyncrhoDB = new IotSynchroDbTask(wsc);
 			new Thread(taskSyncrhoDB).start();
 		}
