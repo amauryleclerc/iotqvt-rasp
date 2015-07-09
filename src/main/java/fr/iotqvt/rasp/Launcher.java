@@ -65,6 +65,7 @@ public class Launcher {
 		// Lancement de la tache de synchro des values si déco
 
 		if (config.getPersistance() == 1) {
+			System.out.println("TASK pour la syncrho des valeurs ...... ");	
 			IotSynchroDbTask taskSyncrhoDB = new IotSynchroDbTask(wsc);
 			new Thread(taskSyncrhoDB).start();
 		}

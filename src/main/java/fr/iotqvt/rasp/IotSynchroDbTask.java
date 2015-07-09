@@ -2,13 +2,18 @@ package fr.iotqvt.rasp;
 
 import java.io.IOException;
 
-import fr.iotqvt.rasp.infra.capteur.CapteurService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import fr.iotqvt.rasp.infra.websocket.WebsocketClient;
 import fr.iotqvt.rasp.modele.Mesure;
 import fr.iotqvt.rasp.persistence.UseSQLiteDB;
 
 public class IotSynchroDbTask implements Runnable {
-
+	
+	private static Logger  LOG = LogManager.getLogger(IotSynchroDbTask.class.getName());
+	
+	
 	// Websocket pour la synchro des données avec le master
 	
 	private WebsocketClient wsc;
@@ -28,7 +33,7 @@ public class IotSynchroDbTask implements Runnable {
 		
 		 mesureFromDB = new Mesure();
 		 
-		 try {
+	 try {
 			connexion = new UseSQLiteDB("iotqvt.db");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -41,21 +46,19 @@ public class IotSynchroDbTask implements Runnable {
 		while (true) {
 			try {
 
-				System.out.println("Recherche la premiere mesure a envoyer au master");
-				if (connexion.findValueToSynchro(mesureFromDB)) {
-					
+//				LOG.debug("Recherche d'une mesure a synchroniser");
+				LOG.info("Recherche d'une mesure a synchroniser");
+				mesureFromDB = connexion.findValueToSynchro(); 
+				// Si l'objet n'est pas null, c'est a dire qu'il existe bien au moins une valeur capturé en mode déconnecté alors on l'envoi au master
+				if ( mesureFromDB != null ) {
 					// reconstitue une mesure à partir des valeurs en base
-					
-				    System.out.println("Capteur :" + mesureFromDB.getCapteur().getModele());
-				    System.out.println("Date :" + mesureFromDB.getDate());
+					LOG.info("Cette valeure doit etre synchronisée" + mesureFromDB.getCapteur().getModele() + "-" + mesureFromDB.getDate());
 				    System.out.println("Valeur :" + mesureFromDB.getValeur());
-					
 					// si la synchro de mesure est ok, alors on met a jour l'indicateur et on recommence avec la mesure suivante  
-					wsc.sendMesure(mesureFromDB); 
-					if (! wsc.isConnectionImpossible()) {
+					boolean res = wsc.sendMesure(mesureFromDB); 
+					if (res ) {
 						// la synchro a fonctionnée => mise a jour de la mesure en base en conséquence
 						connexion.updateValue(mesureFromDB);
-						
 					}
 				};
 			
