@@ -55,8 +55,9 @@ public class UseSQLiteDB {
 		                   "(ID_IOT TEXT     		NOT NULL," +
 		                   " ID_CAP TEXT     		NOT NULL," +
 		                   " M_TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP    NOT NULL," +
-		                   " M_VAL  DECIMAL         NOT NULL );" ;
-		      
+		                   " M_VAL  DECIMAL         NOT NULL, " + 
+		                   " M_SYNC INTEGER );" ;
+			 
 		      stmt.executeUpdate(sql);
 		      stmt.close();
 		    } catch ( Exception e ) {
@@ -65,7 +66,7 @@ public class UseSQLiteDB {
 		    }
 		  }
 
-	public void addValue(String id_iot, String id_cap, long m_timestamp, Float m_val) throws IOException  {
+	public void addValue(String id_iot, String id_cap, long m_timestamp, Float m_val, Integer m_sync) throws IOException  {
 
 		Connection c = null;
 	    Statement stmt = null;
@@ -82,11 +83,12 @@ public class UseSQLiteDB {
 	      d = new Date(m_timestamp);
 	      
 	      // inserting data
-	      PreparedStatement prep = c.prepareStatement("insert into IOTCAPTEURS values(?,?,?,?);");
+	      PreparedStatement prep = c.prepareStatement("insert into IOTCAPTEURS values(?,?,?,?,?);");
 	      prep.setString(1, id_iot); 
 	      prep.setString(2, id_cap);
 	      prep.setDate(3, d);
 	      prep.setFloat(4, m_val);
+	      prep.setInt(5, m_sync);
 	      
 	      prep.execute();
 	      prep.close();
@@ -117,9 +119,11 @@ public class UseSQLiteDB {
 		         String  id_cap = rs.getString("ID_CAP");
 		         Date date  = rs.getDate("M_TIMESTAMP");
 		         float val = rs.getFloat("M_VAL");
+		         Integer sync = rs.getInt("M_SYNC");
 		         System.out.println( "ID_IOT = " + id_iot );
 		         System.out.println( "ID_CAP = " + id_cap );
 		         System.out.println( "M_VAL = " + val );
+		         System.out.println( "M_SYNC = " + sync );
 		         System.out.println();
 		      }
 		      rs.close();
@@ -155,13 +159,43 @@ public class UseSQLiteDB {
 	    System.out.println("Operation done successfully");
 	  }
 
-	public boolean findValueToSynchro(Mesure mesureFromBD)  throws IOException {
-		// TODO Auto-generated method stub
+	public  Mesure findValueToSynchro()  throws IOException {
+	
+		Mesure resultat = new Mesure();
+		resultat = null;
 		
-		
-		return true;
-		
-	}
+		  Connection c = null;
+		   Statement stmt = null;
+		    try {
+		      Class.forName("org.sqlite.JDBC");
+		      c = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
+		      c.setAutoCommit(false);
+
+		      stmt = c.createStatement();
+		      ResultSet rs = stmt.executeQuery( "SELECT * FROM IOTCAPTEURS WHERE M_SYNC = 0;" );
+		      
+		      while ( rs.next() ) {
+		         String id_iot = rs.getString("ID_IOT");
+		         String  id_cap = rs.getString("ID_CAP");
+		         Date date  = rs.getDate("M_TIMESTAMP");
+		         float valMesure = rs.getFloat("M_VAL");
+		         Integer sync = rs.getInt("M_SYNC");
+		      }
+		      
+		      rs.close();
+		      stmt.close();
+		      c.close();
+		      
+	//		  resultat.setValeur(valMesure);
+	//	      resultat.setDate(date);
+		    
+		      
+		    } catch ( Exception e ) {
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		    }
+			return resultat ;
+		  }
 
 	public void updateValue(Mesure mesureFromDB) throws IOException {
 		// TODO Auto-generated method stub

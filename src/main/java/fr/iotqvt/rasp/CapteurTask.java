@@ -36,7 +36,7 @@ public class CapteurTask implements Runnable {
 
 		
 		String s1Capteur = null;
-
+		int resulToInt = 1;
 		
 		try {
 			while (true) {
@@ -48,7 +48,10 @@ public class CapteurTask implements Runnable {
 
 				boolean result =	wsc.sendMesure(m);
 				
-				
+				if (result)  {
+						resulToInt = 1 ;
+				} 	else resulToInt = 0  ;
+					
 				// si la persistance est requise pour un IOT, alors pour tous les capteurs, on ajoute la mesure en base
 				
 				if (m.getCapteur().getCdec().getPersistance() == 1) {
@@ -56,7 +59,7 @@ public class CapteurTask implements Runnable {
 					try {
 						UseSQLiteDB connexion = new UseSQLiteDB("iotqvt.db");
 						System.out.println("ADD VALUE");
-						connexion.addValue(m.getCapteur().getIot(),m.getCapteur().getId(),m.getDate(),m.getValeur());;
+						connexion.addValue(m.getCapteur().getIot(),m.getCapteur().getId(),m.getDate(),m.getValeur(), resulToInt );;
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
