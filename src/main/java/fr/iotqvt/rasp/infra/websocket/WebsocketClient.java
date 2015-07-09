@@ -49,7 +49,7 @@ public class WebsocketClient {
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
-		LOG.error("Connexion au master perdue !");
+		LOG.error("Connexion au master perdue ("+reason.getReasonPhrase()+") !");
 		this.session = null;
 	}
 
